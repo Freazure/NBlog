@@ -10,6 +10,7 @@
 				<el-col :span="12">
 					<el-form-item label="文章首图URL" prop="firstPicture">
 						<el-input v-model="form.firstPicture" placeholder="文章首图，用于随机文章展示"></el-input>
+            <el-image v-if="form.firstPicture !== null && form.firstPicture !== ''" :src="form.firstPicture" style="max-width: 10%;max-height: 10%"></el-image>
 					</el-form-item>
 				</el-col>
 			</el-row>
