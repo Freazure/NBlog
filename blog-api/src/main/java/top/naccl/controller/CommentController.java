@@ -117,7 +117,7 @@ public class CommentController {
 	 * @param jwt     博主身份Token
 	 * @return
 	 */
-	@AccessLimit(seconds = 30, maxCount = 1, msg = "30秒内只能提交一次评论")
+	@AccessLimit(seconds = 1, maxCount = 1, msg = "1秒内只能提交一次评论")
 	@PostMapping("/comment")
 	public Result postComment(@RequestBody Comment comment,
 	                          HttpServletRequest request,

@@ -2,6 +2,7 @@ package top.naccl.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +27,7 @@ import top.naccl.util.JacksonUtils;
 import top.naccl.util.markdown.MarkdownUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: 博客文章业务层实现
@@ -37,6 +35,7 @@ import java.util.Map;
  * @Date: 2020-07-29
  */
 @Service
+@Slf4j
 public class BlogServiceImpl implements BlogService {
 	@Autowired
 	BlogMapper blogMapper;
@@ -160,7 +159,12 @@ public class BlogServiceImpl implements BlogService {
 			 *
 			 * 具体请查看: https://github.com/Naccl/NBlog/issues/58
 			 */
-			int view = (int) redisService.getValueByHashKey(redisKey, blogId);
+			Object value = redisService.getValueByHashKey(redisKey, blogId);
+			if (Objects.isNull(value)){
+				value = 0;
+				log.error("[RedisError]：{}key中没有对应博客id为{}的博客",redisKey, blogId);
+			}
+			int view = (int) value;
 			blogInfo.setViews(view);
 			blogInfos.set(i, blogInfo);
 		}
