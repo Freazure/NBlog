@@ -345,7 +345,12 @@ public class BlogServiceImpl implements BlogService {
 		 * 这里如果出现异常，查看第 152 行注释说明
 		 * @see BlogServiceImpl#setBlogViewsFromRedisToPageResult
 		 */
-		int view = (int) redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		Object value = redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		if (Objects.isNull(value)){
+			value = 0;
+			log.error("[RedisError]：{}key中没有对应博客id为{}的博客",RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		}
+		int view = (int) value;
 		blog.setViews(view);
 		return blog;
 	}
