@@ -8,7 +8,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve --mode development",
-    "prod": "vue-cli-service build --mode production",
+    "prod": "vue-cli-service serve --mode production",
     "build:prod": "vue-cli-service build --mode production",
     "build:dev": "vue-cli-service build --mode development"
   },
